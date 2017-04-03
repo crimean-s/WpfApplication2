@@ -82,8 +82,8 @@ namespace WpfApplication2
                 foreach (Suggest sitem in slist.SuggestItems)
                 {
                     sitem.Query = textBox.Text;
-                    string it = sitem.Name;
-                    sitem.Text = sitem.Name + " " + sitem.Query;
+                    string it = sitem.Command.Name;
+                    sitem.Text = sitem.Command.Name + " " + sitem.Query;
 
                     listBox.Items.Refresh();
                 }
@@ -97,7 +97,7 @@ namespace WpfApplication2
         
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            command.setCommandName(slist.SuggestItems.ElementAt(listBox.SelectedIndex).Name);
+            command.setCommandName(slist.SuggestItems.ElementAt(listBox.SelectedIndex).Command.Name);
             txt2.Text = command.getCommandName();
         }
 
