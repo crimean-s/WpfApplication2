@@ -3,15 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:WpfApplication2"
         xmlns:src="clr-namespace:WpfApplication2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525" LostFocus="Window_LostFocus">
+
     <UserControl x:Name="userControl" Loaded="UserControl_Loaded">
-    
-    <Grid>        
-        <Grid.Resources>
-            <src:SuggestViewModel x:Key="suggestViewModel"/>
+       
+            <Grid>
+            
+            <Grid.Resources>
+                <tb:TaskbarIcon x:Key="notifyIcon" x:Name="MyNotifyIcon" IconSource="D:\ant\cpp\WpfApplication2\WpfApplication2\WpfApplication2\Icons\seacrh_tray.ico" ToolTipText="hello world" Visibility="Visible" />
+                <src:SuggestViewModel x:Key="suggestViewModel"/>
             <Style TargetType="{x:Type Control}" x:Key="baseStyle">
                 <Setter Property="FontSize" Value="20" />
             </Style>
@@ -20,7 +24,9 @@
             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource baseStyle}"></Style>
             <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource baseStyle}"></Style>
             </Grid.Resources>
+                
             <StackPanel x:Name="StackList" VerticalAlignment="Top"  DataContext="{StaticResource suggestViewModel}">
+
             <TextBox x:Name="txt1" Height="32" TextWrapping="Wrap" SpellCheck.IsEnabled="True"  TextChanged="txt1_TextChanged"/>
             
             <ListView x:Name="listBox" FocusManager.IsFocusScope="True" Visibility="Collapsed" Margin="0,5,0,0" ItemsSource="{Binding UpdateSourceTrigger=PropertyChanged}" SelectionChanged="listBox_SelectionChanged" GotFocus="listBox_GotFocus">
@@ -37,7 +43,9 @@
 
 
     </Grid>
+        
     </UserControl>
+   
 </Window>
-    
+
 <!--http://stackoverflow.com/questions/34338465/how-to-use-windows-search-service-in-c-sharp-->

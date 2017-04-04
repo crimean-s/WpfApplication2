@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfApplication2.ViewModel;
+using Hardcodet.Wpf.TaskbarNotification.Interop;
 
 namespace WpfApplication2
 {
@@ -23,6 +24,7 @@ namespace WpfApplication2
 
         SuggestViewModel slist = new SuggestViewModel();
         CommandViewModel command = new CommandViewModel();
+
         
         //private string command = "web";
 
@@ -34,8 +36,8 @@ namespace WpfApplication2
             listBox.Focusable = true;
 
             txt1.Focus();
-
             txt2.Text = command.CurrentCommand.Name;
+
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -105,6 +107,14 @@ namespace WpfApplication2
         {
             Keyboard.ClearFocus();
             listBox.Focus();
+        }
+
+        private void Window_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            //notifyIcon.Visibility = Visibility.Visible;
+            //ShowInTaskbar = false;
+            ////e..Cancel = true;
         }
     }
 }

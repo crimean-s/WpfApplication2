@@ -7,13 +7,11 @@ using WpfApplication2.Model;
 
 namespace WpfApplication2
 {
-    public class Suggest
+    public class Suggest : Search
     {
         public int Id { get; set; }
 
-        public Command Command { get; set; }
-
-        public string Query { get; set; }
+        public Command Command { get; set; }        
 
         public string Text { get; set; }
 

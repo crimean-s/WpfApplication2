@@ -4,13 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApplication2.Model;
 
 namespace WpfApplication2
 {
-    public class WebSearch
+    public class WebSearch : Search
     {
-        public string Query { get; set; }
-
         public string Url { get; set; }
 
         public string Browser { get; set; }
