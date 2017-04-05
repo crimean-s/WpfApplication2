@@ -14,20 +14,21 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfApplication2.ViewModel;
 using Hardcodet.Wpf.TaskbarNotification.Interop;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace WpfApplication2
 {
     
     public partial class MainWindow : Window
     {
-       
-
+      
         SuggestViewModel slist = new SuggestViewModel();
         CommandViewModel command = new CommandViewModel();
 
-        
-        //private string command = "web";
 
+        private System.Windows.Forms.NotifyIcon notifyIcon;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -37,6 +38,17 @@ namespace WpfApplication2
 
             txt1.Focus();
             txt2.Text = command.CurrentCommand.Name;
+            
+
+            // создание notifyIcon //
+            /////////////////////////
+
+            notifyIcon = new System.Windows.Forms.NotifyIcon();
+            notifyIcon.BalloonTipText = "Приложение скрыто";
+            notifyIcon.BalloonTipTitle = "Универсальный поиск";
+            notifyIcon.Text = "Универсальный поиск";
+            notifyIcon.Icon = new System.Drawing.Icon(System.IO.Directory.GetCurrentDirectory() + @"..\..\..\Icons\seacrh_tray.ico");
+            notifyIcon.Click += new EventHandler(notifyIcon_Click);
 
         }
 
@@ -109,12 +121,58 @@ namespace WpfApplication2
             listBox.Focus();
         }
 
-        private void Window_LostFocus(object sender, RoutedEventArgs e)
+
+
+        // Управление notifyIcon //
+
+        void OnClose(object sender, CancelEventArgs args)
         {
-            this.Hide();
-            //notifyIcon.Visibility = Visibility.Visible;
-            //ShowInTaskbar = false;
-            ////e..Cancel = true;
+            notifyIcon.Dispose();
+            notifyIcon = null;
+        }
+
+        private WindowState storedWindowState = WindowState.Normal;
+
+        void OnStateChanged(object sender, EventArgs args)
+        {
+            if (WindowState == WindowState.Minimized)
+            {
+                Hide();
+                if (notifyIcon != null)
+                    notifyIcon.ShowBalloonTip(100);
+            }
+            else
+                storedWindowState = WindowState;
+        }
+
+        void notifyIcon_Click(object sender, EventArgs e)
+        {
+            Show();
+            this.Topmost = true;  // important
+            this.Topmost = false; // important
+            this.Focus();
+            WindowState = storedWindowState;
+        }
+
+        void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs args)
+        {
+            CheckTrayIcon();
+        }
+        
+        void CheckTrayIcon()
+        {
+            ShowTrayIcon(!IsVisible);
+        }
+
+        void ShowTrayIcon(bool show)
+        {
+            if (notifyIcon != null)
+                notifyIcon.Visible = show;
+        }
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            Hide();
         }
     }
 }

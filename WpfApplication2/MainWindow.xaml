@@ -7,14 +7,13 @@
         xmlns:local="clr-namespace:WpfApplication2"
         xmlns:src="clr-namespace:WpfApplication2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" LostFocus="Window_LostFocus">
+        Title="MainWindow" Height="350" Width="525"  Closing="OnClose" StateChanged="OnStateChanged" IsVisibleChanged="OnIsVisibleChanged" Deactivated="Window_Deactivated">
 
     <UserControl x:Name="userControl" Loaded="UserControl_Loaded">
        
             <Grid>
             
-            <Grid.Resources>
-                <tb:TaskbarIcon x:Key="notifyIcon" x:Name="MyNotifyIcon" IconSource="D:\ant\cpp\WpfApplication2\WpfApplication2\WpfApplication2\Icons\seacrh_tray.ico" ToolTipText="hello world" Visibility="Visible" />
+            <Grid.Resources>                
                 <src:SuggestViewModel x:Key="suggestViewModel"/>
             <Style TargetType="{x:Type Control}" x:Key="baseStyle">
                 <Setter Property="FontSize" Value="20" />
