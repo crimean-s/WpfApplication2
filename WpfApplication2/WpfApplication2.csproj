@@ -61,12 +61,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\ISearch.cs" />
     <Compile Include="Model\Command.cs" />
     <Compile Include="Model\FileSeacrh.cs" />
     <Compile Include="Model\Search.cs" />
+    <Compile Include="Modules\SearchFile.cs" />
     <Compile Include="StringItem.cs" />
     <Compile Include="Model\Suggest.cs" />
     <Compile Include="ViewModel\CommandViewModel.cs" />
+    <Compile Include="ViewModel\FileSearchViewModel.cs" />
     <Compile Include="ViewModel\SuggestViewModel.cs" />
     <Compile Include="ViewModel\WebSearchViewModel.cs" />
     <Compile Include="Model\WebSearch.cs" />

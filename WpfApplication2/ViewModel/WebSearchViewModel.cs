@@ -5,14 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WpfApplication2.Interfaces;
 
 namespace WpfApplication2.ViewModel
 {
-    public class WebSearchViewModel
+    public class WebSearchViewModel : ISearch
     {
         public WebSearch WebSearchObject = new WebSearch();
+        
 
-        public void openWebbrowserQuery(string query, string browser)
+        public void Search(string query)
         {
             WebSearchObject.Query = query;
 
@@ -24,11 +26,12 @@ namespace WpfApplication2.ViewModel
             {
                 myProcess.StartInfo.UseShellExecute = true;
 
-                if (browser != "")
+                if (WebSearchObject.Browser != "")
                 {
-                    myProcess.StartInfo.FileName = getBrowserPath(browser);
+                    myProcess.StartInfo.FileName = getBrowserPath(WebSearchObject.Browser);
                     myProcess.StartInfo.Arguments = "\"" + WebSearchObject.Url + "\"";
-                } else
+                }
+                else
                 {
                     myProcess.StartInfo.FileName = WebSearchObject.Url;
                 }
@@ -38,6 +41,11 @@ namespace WpfApplication2.ViewModel
             {
                 MessageBox.Show("A handled exception just occurred: " + e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        public void Setup(object ob)
+        {
+            WebSearchObject.Browser = (string)ob;
         }
 
         private string getBrowserPath(string browser)

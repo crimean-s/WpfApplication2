@@ -71,9 +71,18 @@ namespace WpfApplication2
             if (e.Key == Key.Enter && command.CurrentCommand.Name == "web")
             {
                 WebSearchViewModel web = new WebSearchViewModel();
-                web.openWebbrowserQuery(txt1.Text, "");
+                web.Setup("");
+                web.Search(txt1.Text);
                 listBox.Items.Refresh();   
                 txt2.Text = "go to web";                           
+            }
+            if (e.Key == Key.Enter && command.CurrentCommand.Name == "file")
+            {
+                FileSearchViewModel file = new FileSearchViewModel();
+                file.Setup("");
+                file.Search(txt1.Text);
+                listBox.Items.Refresh();
+                txt2.Text = "go to file";
             }
         }
         
