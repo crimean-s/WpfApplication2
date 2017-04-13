@@ -21,9 +21,9 @@ namespace WpfApplication2
             Name = "First List";
             SuggestItems = new ObservableCollection<Suggest>
             {
-                new Suggest() { Command = new Command() { Name = "web" } , Id = 0, Query = "", Text = ""},
-                new Suggest() { Command = new Command() { Name = "file" }, Id = 1, Query = "", Text = "" },
-                new Suggest() { Command = new Command() { Name = "wiki" }, Id = 2, Query = "", Text = "" }
+                new Suggest() { Command = new Command() { Name = "web" } , Query = "", Text = ""},
+                new Suggest() { Command = new Command() { Name = "file" }, Query = "", Text = "" },
+                new Suggest() { Command = new Command() { Name = "wiki" }, Query = "", Text = "" }
             };
         }
 

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WpfApplication2.Interfaces;
 using WpfApplication2.Modules;
+using WpfApplication2.Modules.Search;
 
 namespace WpfApplication2.ViewModel
 {
@@ -17,7 +18,18 @@ namespace WpfApplication2.ViewModel
 
         public FileSearchViewModel()
         {
-            Connection = new OleDbConnection(@"Provider=Search.CollatorDSO;Extended Properties=""Application=Windows""");
+            try
+            {
+                Connection = new OleDbConnection(@"Provider=Search.CollatorDSO;Extended Properties=""Application=Windows""");
+                Connection.Open();
+            }
+            catch
+            { // fails if desktop search is disabled or not installed
+                Connection = null;
+                MessageBox.Show("Desktop search is disabled");
+            }
+
+            
         }
         
         public void Search(string query)
@@ -30,25 +42,55 @@ namespace WpfApplication2.ViewModel
             var query4 = @"SELECT System.ItemNameDisplay FROM SystemIndex " +
    @"WHERE scope ='file:D:/shara'";
 
+            var query5 = @"SELECT top 1000 System.ItemNameDisplay, System.ItemPathDisplay, System.Kind, System.Search.Rank, System.FileAttributes FROM SYSTEMINDEX WHERE scope ='file:C:\' AND System.ItemName LIKE '%" + query + "%'";
 
-            //Connection.Open();
+            var query6 = @"select top 1000 
+		  System.ItemNameDisplay, System.ItemPathDisplay, System.Kind, System.Search.Rank, System.FileAttributes 
+		  from systemindex 
+		  where CONTAINS(""System.ItemNameDisplay"", '""*{0}*""')
+		  and System.FileAttributes <> ALL BITWISE 0x4 and System.FileAttributes <> ALL BITWISE 0x2 order by System.Search.Rank";
 
-            //var command = new OleDbCommand(query4, Connection);
-            //List<string> result = new List<string>();
+            var query7 = @"select top 20 System.ItemNameDisplay, System.ItemPathDisplay, System.Kind, System.Search.Rank, System.FileAttributes 
+            from systemindex 	  
+            where CONTAINS(""System.ItemNameDisplay"", '" + query + @"')
+            and System.FileAttributes <> ALL BITWISE 0x4 and System.FileAttributes <> ALL BITWISE 0x2 order by System.Search.Rank";
 
-            //using (var r = command.ExecuteReader())
-            //{
-            //    while (r.HasRows)
-            //    {
-            //        //MessageBox.Show(r[0].ToString());
-            //        result.Add(r.GetString(0));
-            //    }
-            //}
+            var command = new OleDbCommand(query7, Connection);
+            List<FileSearchResult> resultList = new List<FileSearchResult>();
 
-            //Connection.Close();
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var result = new FileSearchResult()
+                    {
+                        FileName = reader["System.ItemNameDisplay"].ToString(),
+                        FilePath = reader["System.ItemPathDisplay"].ToString(),
+                        Rank = (int)reader["System.Search.Rank"]
+                    };
+
+
+                    String[] kinds = reader["System.Kind"] as String[];
+                    if (kinds != null && kinds.Length >= 1)
+                    {
+                        foreach (var i in reader["System.Kind"] as String[])
+                        {
+                            result.Kind |= (FileKind)Enum.Parse(typeof(FileKind), i);
+                        }
+                    }
+                    else
+                    {
+                        result.Kind = FileKind.file;
+                    }
+
+                    resultList.Add(result);
+                }
+            }
+
+            Connection.Close();
 
             //IEnumerable<string> st = GetFileList(query, @"D:\alitop\");
-            SearchFile.GetLogicalDrives();
+            //SearchFile.GetLogicalDrives();
 
             MessageBox.Show(query);
         }
@@ -63,7 +105,6 @@ namespace WpfApplication2.ViewModel
             List<string> result = new List<string>();
             Queue<string> pending = new Queue<string>();
             pending.Enqueue(rootFolderPath);
-            string[] tmp;
             while (pending.Count > 0)
             {
                 rootFolderPath = pending.Dequeue();

@@ -39,6 +39,18 @@
       <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.8\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="IQToolkit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqToWiki.Core.1.3\lib\net40-client\IQToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="LinqToWiki.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqToWiki.Core.1.3\lib\net40-client\LinqToWiki.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="LinqToWiki.Generated, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqToWiki.1.5\lib\net40-client\LinqToWiki.Generated.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.1.0\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -65,7 +77,9 @@
     <Compile Include="Model\Command.cs" />
     <Compile Include="Model\FileSeacrh.cs" />
     <Compile Include="Model\Search.cs" />
-    <Compile Include="Modules\SearchFile.cs" />
+    <Compile Include="Modules\Search\FileKind.cs" />
+    <Compile Include="Modules\Search\FileSearchResult.cs" />
+    <Compile Include="Modules\Search\SearchFile.cs" />
     <Compile Include="StringItem.cs" />
     <Compile Include="Model\Suggest.cs" />
     <Compile Include="ViewModel\CommandViewModel.cs" />

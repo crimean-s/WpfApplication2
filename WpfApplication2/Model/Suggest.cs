@@ -9,8 +9,6 @@ namespace WpfApplication2
 {
     public class Suggest : Search
     {
-        public int Id { get; set; }
-
         public Command Command { get; set; }        
 
         public string Text { get; set; }

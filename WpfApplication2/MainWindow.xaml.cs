@@ -16,6 +16,8 @@ using WpfApplication2.ViewModel;
 using Hardcodet.Wpf.TaskbarNotification.Interop;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace WpfApplication2
 {
@@ -24,14 +26,13 @@ namespace WpfApplication2
     {
       
         SuggestViewModel slist = new SuggestViewModel();
-        CommandViewModel command = new CommandViewModel();
-
+        CommandViewModel command = new CommandViewModel();        
 
         private System.Windows.Forms.NotifyIcon notifyIcon;
         
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();                
 
             listBox.ItemsSource = slist.SuggestItems;
             listBox.Focusable = true;
@@ -121,8 +122,9 @@ namespace WpfApplication2
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             command.setCommandName(slist.SuggestItems.ElementAt(listBox.SelectedIndex).Command.Name);
-            txt2.Text = command.getCommandName();
         }
+
+        
 
         private void listBox_GotFocus(object sender, RoutedEventArgs e)
         {
