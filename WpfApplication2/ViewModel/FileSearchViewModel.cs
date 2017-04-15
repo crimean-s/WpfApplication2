@@ -92,7 +92,7 @@ namespace WpfApplication2.ViewModel
             //IEnumerable<string> st = GetFileList(query, @"D:\alitop\");
             //SearchFile.GetLogicalDrives();
 
-            MessageBox.Show(query);
+            // MessageBox.Show(query);
         }
 
         public void Setup(object ob)

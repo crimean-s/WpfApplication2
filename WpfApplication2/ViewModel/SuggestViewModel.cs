@@ -12,9 +12,8 @@ namespace WpfApplication2
     {
         
         private string Name { get; set; }
+
         public ObservableCollection<Suggest> SuggestItems { get; private set; }
-
-
 
         public SuggestViewModel()
         {

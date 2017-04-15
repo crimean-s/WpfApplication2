@@ -85,6 +85,14 @@ namespace WpfApplication2
                 listBox.Items.Refresh();
                 txt2.Text = "go to file";
             }
+            if (e.Key == Key.Enter && command.CurrentCommand.Name == "wiki")
+            {
+                WikiSearchViewModel wiki = new WikiSearchViewModel();
+                wiki.Setup("");
+                wiki.Search(txt1.Text);
+                listBox.Items.Refresh();
+                txt2.Text = "go to wiki";
+            }
         }
         
 

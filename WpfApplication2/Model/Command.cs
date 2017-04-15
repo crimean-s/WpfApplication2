@@ -8,7 +8,6 @@ namespace WpfApplication2.Model
 {
     public class Command
     {
-        public string Name { get; set; }
-        
+        public string Name { get; set; }        
     }
 }

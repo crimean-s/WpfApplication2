@@ -80,8 +80,10 @@
     <Compile Include="Modules\Search\FileKind.cs" />
     <Compile Include="Modules\Search\FileSearchResult.cs" />
     <Compile Include="Modules\Search\SearchFile.cs" />
+    <Compile Include="Modules\Wiki\WikiSearchResult.cs" />
     <Compile Include="StringItem.cs" />
     <Compile Include="Model\Suggest.cs" />
+    <Compile Include="ViewModel\WikiSearchViewModel.cs" />
     <Compile Include="ViewModel\CommandViewModel.cs" />
     <Compile Include="ViewModel\FileSearchViewModel.cs" />
     <Compile Include="ViewModel\SuggestViewModel.cs" />
